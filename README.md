@@ -7,7 +7,7 @@ This repository demonstrates **software** and _formats_:
 
 1. **Git**
 1. **Github**
-1. _Markdown_ (To learn syntax)
+1. _Markdown_ (To learn syntax) - [] (https://guides.github.com/features/mastering-markdown/)
 1. _Rmarkdown_
 
 ## Conclusion
