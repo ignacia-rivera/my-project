@@ -1,0 +1,44 @@
+---
+title: "viz"
+author: "ignacia-rivera"
+date: "April 16, 2016"
+output: html_document
+---
+
+## Data and setup
+
+```{r calling libraries and exploring data}
+library(dplyr)
+library(ggplot2)
+library(gapminder)
+
+# preview data, the way this dataframe is presented is different than the usual one, because we have first call dyplr
+gapminder
+
+# get range of available data
+summary(gapminder)
+
+```
+
+
+
+#plot
+```{r calling libraries and exploring data}
+
+g = gapminder %>%
+  filter(year==2007) %>%   # most recent year 
+  mutate(pop_m = pop/1e6)  # population, millions
+
+# plot scatterplot of most recent year 
+s = ggplot(g, aes(x=gdpPercap, y=lifeExp, size=pop, col=continent)) +
+  geom_point()+
+  ggtitle('Health & Wealth of Nations for 2007') +
+  xlab('GDP per capita ($/year)') +
+  ylab('Life expectancy (years)') +
+  scale_colour_discrete(name='Continent') +
+  scale_size_continuous(name='Population (M)') +
+  theme_bw()
+ggsave('hans.png')
+
+```
+
