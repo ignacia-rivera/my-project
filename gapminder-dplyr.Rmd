@@ -1,0 +1,74 @@
+---
+title: "Gapminder Analysis with dplyr"
+author: "ignacia-rivera"
+date: "April 16, 2016"
+output: html_document
+---
+
+## Load dplyr
+
+```{r setup dplyr, warning= FALSE}
+library (dplyr)
+```
+
+## Load gapmider
+
+```{r setup gapminder, echo=FALSE}
+#install.packages("gapminder")
+library(gapminder)
+str(gapminder)
+#this package cames with margtittr, we can also use %>%  without dplyr but we need to upload margrittr.
+```
+
+## Exploration with gapminder
+
+```{r subseting, echo=FALSE}
+
+# subseting by row
+filter(gapminder, lifeExp <29)
+filter(gapminder, country=="Rwanda")
+x <- filter(gapminder, country %in% c("Rwanda", "Afganistan"))
+
+# compare without dplyer
+gapminder[gapminder$lifeExp <29, ]
+subset(gapminder, country =="Rwanda") 
+
+#the pipe opperator %>% 
+#from the magrittr package
+
+gapminder %>%  head
+head(gapminder) #same as 
+
+gapminder %>%  head(3)
+head(gapminder, 3) #same as
+
+# subset bu columns with the command select 
+select(gapminder, year, lifeExp)
+gapminder %>% select (year, lifeExp)
+
+gapminder %>% #Take the gapmider dataset, then select this two columns, then show me the 4 first
+  select(year, lifeExp) %>% 
+  head(4)
+
+# Calulate the gdp of Cambodia with dplyr
+
+gapminder %>% 
+  filter(country== "Cambodia") %>% 
+  select(country, year, pop, gdpPercap) #another way we can select is by select(-continet, -lifeExp) 
+  
+# Calulate the gdp of Cambodia without dplyr
+  
+gapminder[gapminder$country =="Cambodia", c('country', 'year', 'pop', "gdpPercap")]
+
+# Mutate (add a new variable)
+
+  gapminder %>%  
+  select(country, year, pop, gdpPercap) %>% 
+  mutate(gdp= pop* gdpPercap) %>% 
+  group_by(country) %>% 
+  summarise((mean_gdp= mean(gdp))) %>% 
+  ungroup()
+```
+
+**It is a good practice to ungroup once you grouped to avoid errors in next steps!
+  
